@@ -1,4 +1,4 @@
-#!/sonas-hs/mhammell/hpc/home/tforcier/anaconda2/bin/python
+#!/usr/bin/env python2.7
 
 '''
 Created on Dec 6, 2017
@@ -34,7 +34,7 @@ from TEToolkit.GeneFeatures import *
 def prepare_parser():
     desc = "Measuring TE expression per-sample."
 
-    exmp = "Example: TElocal -b RNAseq.bam --GTF gene_annotation.gtf --TE TE_annotation.db --sortByPos --mode multi "
+    exmp = "Example: TElocal -b RNAseq.bam --GTF gene_annotation.gtf --TE TE_annotation.gtf.ind --sortByPos --mode multi "
 
     parser = argparse.ArgumentParser(prog='TElocal', description=desc, epilog=exmp)
 
@@ -44,26 +44,33 @@ def prepare_parser():
                         help='GTF or db file for gene annotations')
     parser.add_argument('--TE', metavar='TE-GTF-file', dest='tefile', type=str, required=True,
                         help='GTF or db file for transposable element annotations')
-    parser.add_argument('--format', metavar='input file format', dest='format', type=str, default='BAM', choices=['BAM', 'SAM'],
-                        help='Input file format: BAM or SAM. DEFAULT: BAM')
-    parser.add_argument('--stranded', metavar='option', dest='stranded', type=str, default="yes", choices=['yes', 'no', 'reverse'],
-                        help='Is this a stranded library? (yes, no, or reverse). DEFAULT: yes.')
-    parser.add_argument('--mode', metavar='TE counting mode', dest='te_mode', type=str, default='multi', choices=['uniq', 'multi'],
-                        help='How to count TE: uniq (unique mappers only), or multi (distribute among all alignments).\
-                        DEFAULT: multi')
+    parser.add_argument('--format', metavar='input file format', dest='fileformat', type=str, default='BAM',
+                        choices=['BAM', 'SAM'], help='Input file format: BAM or SAM. DEFAULT: BAM')
+    parser.add_argument('--stranded', metavar='option', dest='stranded', type=str, default="no",
+                        choices=['yes', 'no', 'reverse'], help='Is this a stranded library? (yes, no, or reverse). \
+                        For "first-strand" cDNA libraries (e.g. TruSeq), choose reverse. \
+                        For "second-strand" cDNA libraries (e.g. ScriptSeq), choose yes. DEFAULT: no.')
+    parser.add_argument('--mode', metavar='TE counting mode', dest='te_mode', type=str, default='multi',
+                        choices=['uniq', 'multi'], help='How to count TE: uniq (unique mappers only), \
+                        or multi (distribute among all alignments). DEFAULT: multi')
     parser.add_argument('--project', metavar='name', dest='prefix', default='TElocal_out',
                         help='Name of this project. DEFAULT: TElocal_out')
     parser.add_argument('--sortByPos', dest='sortByPos', action="store_true",
                         help='Alignment file is sorted by chromosome position.')
     parser.add_argument('-i', '--iteration', metavar='iteration', dest='numItr', type=int, default=100,
                         help='number of iteration to run the optimization. DEFAULT: 100')
-    parser.add_argument('--maxL', metavar='maxL', dest='maxL', type=int, default=500, help='maximum fragment length. DEFAULT:500')
-    parser.add_argument('--minL', metavar='minL', dest='minL', type=int, default=0, help='minimum fragment length. DEFAULT:0')
+    parser.add_argument('--maxL', metavar='maxL', dest='maxL', type=int, default=500,
+                        help='maximum fragment length. DEFAULT:500')
+    parser.add_argument('--minL', metavar='minL', dest='minL', type=int, default=0,
+                        help='minimum fragment length. DEFAULT:0')
     parser.add_argument('-L', '--fragmentLength', metavar='fragLength', dest='fragLength', type=int, default=0,
-                        help='average fragment length for single end reads. For paired-end, estimated from the input alignment file. DEFAULT: for paired-end, estimate from the input alignment file; for single-end, ignored by default.')
+                        help='average fragment length for single end reads. \
+                        For paired-end, estimated from the input alignment file. DEFAULT: for paired-end, \
+                        estimate from the input alignment file; for single-end, ignored by default.')
     parser.add_argument('--verbose', metavar='verbose', dest='verbose', type=int, default=2,
-                        help='Set verbose level. 0: only show critical message, 1: show additional warning message, 2: show process information, 3: show debug messages. DEFAULT:2')
-    parser.add_argument('--version', action='version', version='%(prog)s 2.0.3')
+                        help='Set verbose level. 0: only show critical message, 1: show additional warning message, \
+                        2: show process information, 3: show debug messages. DEFAULT:2')
+    parser.add_argument('--version', action='version', version='%(prog)s 0.1')
 
     return parser
 
@@ -72,15 +79,16 @@ class UnknownChrom(Exception):
     pass
 
 
-def count_reads(filename, format, geneIdx, teIdx, stranded, te_mode, sortByPos, numItr, fragLength, maxL):
+def count_reads(filename, fileformat, geneIdx, teIdx, stranded, te_mode, sortByPos, numItr, fragLength, maxL):
     cnt_tbl = {}
     libsize = []
     # check input files exist or not
     if not os.path.isfile(filename):
-        sys.stderr.write("File %s does not exist or is not a file.\n" % (filename))
+        sys.stderr.write("File %s does not exist or is not a file.\n" % filename)
         sys.exit(1)
     try:
-        (gene_counts, te_instance_counts) = count_transcript_abundance(filename, format, geneIdx, teIdx, stranded, te_mode, sortByPos, numItr, fragLength, maxL)
+        (gene_counts, te_instance_counts) = count_transcript_abundance(filename, fileformat, geneIdx, teIdx, stranded,
+                                                                       te_mode, sortByPos, numItr, fragLength, maxL)
         # summarize on elements
         te_ele_counts = teIdx.groupByEle(te_instance_counts)
         # save gene counts and TE counts into count table
@@ -98,12 +106,12 @@ def count_reads(filename, format, geneIdx, teIdx, stranded, te_mode, sortByPos, 
     return cnt_tbl
 
 
-def fetch_exon(chrom, st, cigar, direction, format):
+def fetch_exon(chrom, st, cigar, direction, fileformat):
     ''' fetch exon regions defined by cigar. st must be zero based
     return list of tuple of (chrom,st, end)
     '''
     chrom_st = st
-    if format == "BAM":
+    if fileformat == "BAM":
         chrom_st += 1
     exon_bound = []
 
@@ -129,7 +137,7 @@ def fetch_exon(chrom, st, cigar, direction, format):
     return exon_bound
 
 
-def ovp_annotation(references, multi_reads, geneIdx, teIdx, stranded, format):
+def ovp_annotation(references, multi_reads, geneIdx, teIdx, stranded, fileformat):
     annot_gene = []
     annot_TE = []
 
@@ -156,10 +164,10 @@ def ovp_annotation(references, multi_reads, geneIdx, teIdx, stranded, format):
         # fetch all mapping intervals
         itv_list = []
         if r1 is not None:
-            itv_list = fetch_exon(chrom1, r1.pos, r1.cigartuples, direction, format)
+            itv_list = fetch_exon(chrom1, r1.pos, r1.cigartuples, direction, fileformat)
 
         if chrom2 != "":  # paired-end, both mates are mapped
-            itv_list2 = fetch_exon(chrom2, r2.pos, r2.cigar, direction, format)
+            itv_list2 = fetch_exon(chrom2, r2.pos, r2.cigar, direction, fileformat)
             itv_list.extend(itv_list2)
         try:
             TEs = teIdx.TE_annotation(itv_list)
@@ -177,9 +185,9 @@ def ovp_annotation(references, multi_reads, geneIdx, teIdx, stranded, format):
     return (annot_gene, annot_TE)
 
 
-def readInAlignment(filename, format, sortByPos):
+def readInAlignment(filename, fileformat, sortByPos):
     try:
-        if format == "BAM":
+        if fileformat == "BAM":
             if not sortByPos:
                 samfile = pysam.AlignmentFile(filename, 'rb')
                 if len(samfile.header) == 0:
@@ -208,9 +216,9 @@ def readInAlignment(filename, format, sortByPos):
     return samfile
 
 
-def count_transcript_abundance(filename, format, geneIdx, teIdx, stranded, te_mode, sortByPos, numItr, fragLength, maxL):
+def count_transcript_abundance(filename, fileformat, geneIdx, teIdx, stranded, te_mode, sortByPos, numItr, fragLength, maxL):
     # read in BAM/SAM file
-    samfile = readInAlignment(filename, format, sortByPos)
+    samfile = readInAlignment(filename, fileformat, sortByPos)
 
     references = samfile.references
 
@@ -235,7 +243,7 @@ def count_transcript_abundance(filename, format, geneIdx, teIdx, stranded, te_mo
     multi_reads = []
     cc = 0
     try:
-        while(1):
+        while 1:
             i += 1
             cc += 1
             aligned_read = samfile.next()
@@ -254,9 +262,9 @@ def count_transcript_abundance(filename, format, geneIdx, teIdx, stranded, te_mo
                 if cur_read_name == prev_read_name or prev_read_name == "":
                     prev_read_name = cur_read_name
                     if aligned_read.is_read1:
-                            multi_read1.append(aligned_read)
+                        multi_read1.append(aligned_read)
                     if aligned_read.is_read2:
-                            multi_read2.append(aligned_read)
+                        multi_read2.append(aligned_read)
                     continue
 
                 else:
@@ -296,7 +304,7 @@ def count_transcript_abundance(filename, format, geneIdx, teIdx, stranded, te_mo
                             continue
 
                         else:
-                            # singlton
+                            # singleton
                             if len(multi_read2) == 0:
                                 for r in multi_read1:
                                     alignments_per_read.append((r, None))
@@ -330,7 +338,7 @@ def count_transcript_abundance(filename, format, geneIdx, teIdx, stranded, te_mo
                             alignments_per_read.append((aligned_read, None))
                             continue
             try:
-                (annot_gene, annot_TE) = ovp_annotation(references, alignments_per_read, geneIdx, teIdx, stranded, format)
+                (annot_gene, annot_TE) = ovp_annotation(references, alignments_per_read, geneIdx, teIdx, stranded, fileformat)
                 if len(alignments_per_read) > 1:  # multi read, prior to TE
                     no_annot_te = parse_annotations_TE(multi_reads, annot_TE, te_counts, te_multi_counts, leftOver_te)
 
@@ -418,22 +426,22 @@ def count_transcript_abundance(filename, format, geneIdx, teIdx, stranded, te_mo
 
 
 def parse_annotations_gene(annot_gene, gene_counts, leftOver_gene):
-        if len(annot_gene) > 1:
-            leftOver_gene.append((annot_gene, 1.0))
-        elif len(annot_gene) == 1:
-            genes = annot_gene[0]
-            if len(genes) == 1:
+    if len(annot_gene) > 1:
+        leftOver_gene.append((annot_gene, 1.0))
+    elif len(annot_gene) == 1:
+        genes = annot_gene[0]
+        if len(genes) == 1:
+            gene_counts[genes[0]] += 1
+        else:
+            if genes[0] == genes[1]:
                 gene_counts[genes[0]] += 1
             else:
-                if genes[0] == genes[1]:
-                    gene_counts[genes[0]] += 1
-                else:
-                    gene_counts[genes[0]] += 0.5
-                    gene_counts[genes[1]] += 0.5
-        else:
-            return True
+                gene_counts[genes[0]] += 0.5
+                gene_counts[genes[1]] += 0.5
+    else:
+        return True
 
-        return False
+    return False
 
 
 # Assign ambiguous genic reads mapped to a location with multiple annotations
@@ -509,7 +517,7 @@ def output_count_tbl(tbl, prefix):
                     vallist.append(int(val))
                     cnt_tbl[k] = vallist
 
-        #output
+        # output
         f.write(header + "\n")
         for gene in sorted(cnt_tbl.keys()) :
            vals = cnt_tbl[gene]
@@ -521,6 +529,7 @@ def output_count_tbl(tbl, prefix):
         f.close()
 
     return
+
 
 # Main function of script
 def main():
@@ -536,63 +545,65 @@ def main():
 
     info("Processing annotation files ...\n")
 
+    # gene index
+    if args.gtffile[-4:] == '.gtf':
+        try:
+            info("Building gene index ....... \n")
+            geneIdx = GeneFeatures(args.gtffile, args.stranded, "exon", "gene_id")
+            info("Done building gene index ...... \n")
+        except:
+            sys.stderr.write("Error in building gene index \n")
+            sys.exit(1)
 
-    if args.gtffile[-3:] == 'gtf':
-
-        # (features, genes) = read_features(args.gtffile, args.stranded, "exon", "gene_id")
-        info("Building gene index .......\n")
-        geneIdx = GeneFeatures(args.gtffile, args.stranded, "exon", "gene_id")
-        info("Done building gene index ......\n")
-        
-    elif args.gtffile[-3:] == '.db':
-        info("File extension indicates a pre-built gene index, attempting to load ......\n")
+    elif args.gtffile[-4:] == '.ind':
+        info("File extension indicates a pre-built gene index, attempting to load ...... \n")
 
         try:
             with open(args.gtffile, 'rb') as newhandle:
-                    geneIdx = pickle.load(newhandle)
-            info("gene index loaded ......\n")
+                geneIdx = pickle.load(newhandle)
+            info("gene index loaded ...... \n")
         except:
-            sys.stderr.write("Error attempting to load %s\n" %(args.gtffile))
+            sys.stderr.write("Error attempting to load %s \n" % args.gtffile)
             sys.exit(1)
-            
+
     else:
-        sys.stderr.write("Gene annotation file extension not recognized, it needs to be either .gtf or .db")
+        sys.stderr.write("Gene annotation file extension not recognized, it needs to be either .gtf or .ind")
         sys.exit(1)
-    
 
     # TE index
-    try:
-        if args.tefile[-3:] == 'gtf':
+    if args.tefile[-4:] == '.gtf':
+        try:
             teIdx = TEfeatures()
             cur_time = time.time()
             te_tmpfile = '.' + str(cur_time) + '.te.gtf'
             subprocess.call(['sort -k 1,1 -k 4,4g ' + args.tefile + ' >' + te_tmpfile], shell=True)
-            info("Building TE index .......\n")
-            teIdx.build(te_tmpfile, args.te_mode)
+            info("Building TE index ....... \n")
+            teIdx.build(te_tmpfile)
             subprocess.call(['rm -f ' + te_tmpfile], shell=True)
-            info("Done building TE index ......\n")
-        elif args.tefile[-3:] == '.db':
-            info("File extension indicates a pre-built TE index, attempting to load ......\n")
-            try:
-                with open(args.tefile, 'rb') as newhandle:
-                    teIdx = pickle.load(newhandle)
-                info("TE index loaded ......\n")
-            except:
-                sys.stderr.write("Error attempting to load %s\n" %(args.tefile))
-                sys.exit(1)
-        else:
-            sys.stderr.write("TE annotation file extension not recognized, it needs to be either .gtf or .db")
+            info("Done building TE index ...... \n")
+
+        except:
+            sys.stderr.write("Error in building TE index \n")
             sys.exit(1)
-    except:
-        sys.stderr.write("Error in building gene/TE index \n")
+
+    elif args.tefile[-4:] == '.ind':
+        info("File extension indicates a pre-built TE index, attempting to load ...... \n")
+        try:
+            with open(args.tefile, 'rb') as newhandle:
+                teIdx = pickle.load(newhandle)
+            info("TE index loaded ...... \n")
+        except:
+            sys.stderr.write("Error attempting to load %s\n" % args.tefile)
+            sys.exit(1)
+    else:
+        sys.stderr.write("TE annotation file extension not recognized, it needs to be either .gtf or .ind")
         sys.exit(1)
 
-
-
     # Read sample files make count table
-    info("\nReading sample file ...\n")
+    info("\nReading sample file ... \n")
 
-    tbl = count_reads(args.bam, args.parser, geneIdx, teIdx, args.stranded, args.te_mode, args.sortByPos, args.numItr, args.fragLength, args.maxL)
+    tbl = count_reads(args.bam, args.fileformat, geneIdx, teIdx, args.stranded, args.te_mode, args.sortByPos,
+                      args.numItr, args.fragLength, args.maxL)
     info("Finished processing sample file")
 
     output_count_tbl(tbl, args.prefix)
@@ -602,5 +613,5 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        sys.stderr.write("User interrupt !\n")
+        sys.stderr.write("User interrupt! \n")
         sys.exit(0)

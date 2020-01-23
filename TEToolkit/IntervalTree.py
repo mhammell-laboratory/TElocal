@@ -1,7 +1,8 @@
-#licensed under the MIT License
-#http://opensource.org/licenses/mit-license.php
+# licensed under the MIT License
+# http://opensource.org/licenses/mit-license.php
 
 import operator
+
 
 class IntervalTree(object):
     __slots__ = ('intervals', 'left', 'right', 'center')
@@ -28,7 +29,7 @@ class IntervalTree(object):
 
         this provides an extreme and satisfying performance improvement
         over searching manually over all 3 elements in the list (like
-        a sucker). 
+        a sucker).
 
         the IntervalTree class now also supports the iterator protocol
         so it's easy to loop over all elements in the tree:
@@ -40,47 +41,41 @@ class IntervalTree(object):
 
         NOTE: any object with start and stop attributes can be used
         in the incoming intervals list.
-        """ 
+        """
 
         depth -= 1
         if (depth == 0 or len(intervals) < minbucket) and len(intervals) < maxbucket:
             self.intervals = intervals
             self.left = self.right = None
-            return 
+            return
 
         if _extent is None:
             # sorting the first time through allows it to get
             # better performance in searching later.
             intervals.sort(key=operator.attrgetter('start'))
 
-        left, right = _extent or \
-               (intervals[0].start, max(i.stop for i in intervals))
-        #center = intervals[len(intervals)/ 2].stop
+        left, right = _extent or (intervals[0].start, max(i.stop for i in intervals))
         center = (left + right) / 2.0
 
-        
         self.intervals = []
-        lefts, rights  = [], []
-        
+        lefts, rights = [], []
 
         for interval in intervals:
             if interval.stop < center:
                 lefts.append(interval)
             elif interval.start > center:
                 rights.append(interval)
-            else: # overlapping.
+            else:  # overlapping.
                 self.intervals.append(interval)
-                
-        self.left   = lefts  and IntervalTree(lefts,  depth, minbucket, (intervals[0].start,  center)) or None
-        self.right  = rights and IntervalTree(rights, depth, minbucket, (center,               right)) or None
+
+        self.left = lefts and IntervalTree(lefts, depth, minbucket, (intervals[0].start, center)) or None
+        self.right = rights and IntervalTree(rights, depth, minbucket, (center, right)) or None
         self.center = center
- 
- 
+
     def find(self, start, stop):
         """find all elements between (or overlapping) start and stop"""
         if self.intervals and not stop < self.intervals[0].start:
-            overlapping = [i for i in self.intervals if i.stop >= start 
-                                                    and i.start <= stop]
+            overlapping = [i for i in self.intervals if i.stop >= start and i.start <= stop]
         else:
             overlapping = []
 
@@ -95,8 +90,7 @@ class IntervalTree(object):
     def find_gene(self, start, stop):
         """find all elements between (or overlapping) start and stop"""
         if self.intervals and not stop < self.intervals[0].start:
-            overlapping = [i.gene for i in self.intervals if i.stop >= start 
-                                                    and i.start <= stop]
+            overlapping = [i.gene for i in self.intervals if i.stop >= start and i.start <= stop]
         else:
             overlapping = []
 
@@ -110,43 +104,22 @@ class IntervalTree(object):
 
     def __iter__(self):
         if self.left:
-            for l in self.left: yield l
+            for l in self.left:
+                yield l
 
-        for i in self.intervals: yield i
+        for i in self.intervals:
+            yield i
 
         if self.right:
-            for r in self.right: yield r
-   
-    # methods to allow un/pickling (by pzs):
-    # these methods throw AttributeError: center
-#    def __getstate__(self):
-#        return { 'intervals' : self.intervals,
-#                    'left'   : self.left,
-#                    'right'  : self.right,
-#                    'center' : self.center }
+            for r in self.right:
+                yield r
 
-#    def __setstate__(self, state):
-#        for key,value in state.iteritems():
-#            setattr(self, key, value)
 
 class Interval(object):
-    #__slots__ = ('start', 'stop')
     def __init__(self, gene_id, start, stop):
         self.start = start
-        self.stop  = stop
+        self.stop = stop
         self.gene = gene_id
 
     def __repr__(self):
         return "%s (%i, %i)" % (self.gene, self.start, self.stop)
-    
-    #def __getstate__(self):
-    #    return {'start': self.start, 
-    #            'stop': self.stop }
-    #def __setstate__(self, state):
-    #    for k, v in state.iteritems():
-    #        setattr(self, k, v)
-
-#if __name__ == '__main__':
-#    inputlist = [Interval("a",2,13),Interval("b",3,6),Interval("c",4,5),Interval("d",15,60),Interval("e",70,105),Interval("f",90,110),Interval("g",90,115),Interval("h",101,105)]
-#    tree = IntervalTree(inputlist)
-#    print tree.find(12,100)

@@ -22,17 +22,17 @@ DM_CHROM = 'data/dm3_chromsize'
 MAX_BIT = 50000
 
 TEindex_BINSIZE = 500
-OPT_TOL = 0.0001 #tolerance for iterative optimization
+OPT_TOL = 0.0001  # tolerance for iterative optimization
 
-efgsize = {"hg":2.7e9,
-           "mm":1.87e9,
-           "tm":0.789e9,
-           "dm":1.2e8}
+efgsize = {"hg": 2.7e9,
+           "mm": 1.87e9,
+           "tm": 0.789e9,
+           "dm": 1.2e8}
 
 
 NORM_METHOD = 'sd'
 STAT_METHOD = 'gt'
-BIN_SIZE = 10000 # for computing bin correlation 
+BIN_SIZE = 10000  # for computing bin correlation
 P_VAL = 1e-5
 
 

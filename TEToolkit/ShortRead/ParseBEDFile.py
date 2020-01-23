@@ -7,23 +7,21 @@ import sys
 import os
 import struct
 import logging
-import struct
 import gzip
 from array import array
 from time import time
-from math import ceil,floor 
-from TEToolkit.Constants import BIN_SIZE,MAX_BIT, species_chrom_lengths
+from math import ceil, floor
+from TEToolkit.Constants import BIN_SIZE, MAX_BIT, species_chrom_lengths
 from TEToolkit.IO.FeatIO import FWTrackII
 from TEToolkit.TEindex import *
-#import rpy2.robjects as robjects
 
 
 class Read :
     def __init__(self):
-        self.chrom  = ""
-        self.start  = -1
-        self.end    = -1
-        self.strand   = "" 
+        self.chrom = ""
+        self.start = -1
+        self.end = -1
+        self.strand = ""
         self.name = ""   
         self.qual = 0
         
@@ -61,27 +59,26 @@ class GenericParser:
             else:
                 self.fhd.seek(0)
                 return t
-            
-class SAMFile :
+
+
+class SAMFile:
     '''
       short reads in sam format
       saved by chromosome
-   '''
-		
-		
-    def __init__(self, srcfile,chroms):
-	
+    '''
+
+    def __init__(self, srcfile, chroms):
         self.__srcfile = srcfile
         self.__fileList = dict()
         self.size = 0
         self.__binTags = []
-	        
-class BEDFile(GenericParser) :
+
+
+class BEDFile(GenericParser):
     '''
       short reads in bed format
       saved by chromosome
     '''
-
 
     def __init__(self, srcfile):
         '''
@@ -95,13 +92,10 @@ class BEDFile(GenericParser) :
         self.__buildAready = False
         
         self.fhd = open(srcfile, 'r')
-        #self.__seprate_by_chrom(chroms)
-        #self.__seprate_by_chrom()
         
-    def sameFam(self,multi_reads,teIdx,seq_name=""):
+    def sameFam(self, multi_reads, teIdx, seq_name=""):
         famlist = {}
         sel_reads = []
-        #sel_idx = []
         
         for r in multi_reads :
             chr = r.chrom
@@ -937,6 +931,4 @@ class BAMFile(GenericParser) :
         else:
             thisstrand = 0
 
-        return (seq_name,thisref, thisstart, seq_len,thisstrand,qual)      
-        
- 
+        return (seq_name, thisref, thisstart, seq_len, thisstrand, qual)

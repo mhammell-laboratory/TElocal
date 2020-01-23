@@ -7,29 +7,15 @@ bin correlation
 
 @author: Ying Jin
 '''
-#from rpy2.robjects.packages import importr
-#from rpy2.robjects import FloatVector 
-#import rpy2.robjects as robjects
-#import rpy2.robjects.lib.ggplot2 as ggplot2
 import subprocess
-
-
 from array import array
-#import numpy as np
-
 import logging
 import sys
 from TEToolkit.Constants import *
 from TEToolkit.ShortRead.ParseBEDFile import *
 
 
-#stats = importr('stats')
-#grdevices = importr('grDevices')
-
-
-#def normalize(method,treatment,control,chrlen_tbl) :
 def normalize(method,treatment,tinput,control,cinput,species,prj_name) :
-    
     
     if method == 'sd' : #sequence depth
         return( seq_depth(treatment,tinput,control,cinput))
