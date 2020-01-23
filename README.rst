@@ -1,11 +1,11 @@
 TElocal
 =============
 
-Version: 0.1
+Version: 0.1.0
 
 *NOTE* TElocal relies on specially curated and indexed GTF files, which are not
 packaged with this software due to their size. Please go to 
-`our website <http://hammelllab.labsites.cshl.edu/software#TEtranscripts>`_
+`our website <http://hammelllab.labsites.cshl.edu/software#TElocal>`_
 for instructions to download the prebuilt curated indices.
 
 TElocal takes RNA-seq (and similar data) and annotates reads to both

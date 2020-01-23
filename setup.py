@@ -5,7 +5,7 @@ def readme():
                return f.read()
 
 setup(name='TElocal',
-      version='0.1',
+      version='0.1.0',
       description='Tool for estimating differential enrichment of Transposable Elements and other highly repetitive regions in a locus-specific approach',
       long_description=readme(),
       classifiers=[
@@ -20,7 +20,7 @@ setup(name='TElocal',
           'Operating System :: Unix'
       ],
       keywords='TE transposable element differential enrichment',
-      url='http://hammelllab.labsites.cshl.edu/software',
+      url='http://hammelllab.labsites.cshl.edu/software#TElocal',
       author='Talitha Forcier, Ying Jin, Eric Paniagua, Oliver Tam, Molly Hammell',
       author_email='talitha@cshl.edu',
       license='GPLv3',
