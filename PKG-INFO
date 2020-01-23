@@ -1,5 +1,5 @@
 Name: TElocal
-Version: 0.1
+Version: 0.1.0
 Summary: Tool for estimating differential enrichment of Transposable Elements and other highly repetitive regions
 Home-page: http://hammelllab.labsites.cshl.edu/software#TEtranscripts
 Author: Talitha Forcier, Ying Jin, Eric Paniagua, Oliver Tam and Molly Hammell
@@ -8,7 +8,7 @@ License: GPLv3
 Description: TElocal
         =========
         
-        Version: 0.1
+        Version: 0.1.0
 
         *NOTE* All programs rely on specially curated GTF or ind files, which are not
         packaged with this software due to their size. Please go to 
