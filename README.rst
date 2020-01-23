@@ -16,7 +16,7 @@ genes & transposable elements.
 
 `MHammell Lab <http://hammelllab.labsites.cshl.edu/software>`_
 
-Created by Talitha Forcier, Ying Jin, Eric Paniagua, Oliver Tam & Molly Hammell, February 2014
+Created by Ying Jin, Eric Paniagua, Oliver Tam & Molly Hammell, February 2014
 
 Copyright (C) 2014-2020 Talitha Forcier, Ying Jin, Eric Paniagua, Oliver Tam & Molly Hammell
 
