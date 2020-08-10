@@ -98,7 +98,7 @@ def read_opts3(parser):
 
 
 def prepare_parser():
-    desc = "Measuring TE expression per-sample."
+    desc = "Measuring TE expression per-locus, per-sample."
 
     exmp = "Example: TElocal -b RNAseq.bam --GTF gene_annotation.gtf --TE TE_annotation.locInd --mode multi "
 
@@ -108,12 +108,12 @@ def prepare_parser():
                         help='An RNAseq BAM file.')
     parser.add_argument('--GTF', metavar='genic-GTF-file', dest='gtffile', type=str, required=True,
                         help='GTF or db file for gene annotations')
-    parser.add_argument('--TE', metavar='TE-GTF-file', dest='tefile', type=str, required=True,
-                        help='GTF or db file for transposable element annotations')
+    parser.add_argument('--TE', metavar='TE-annot-file', dest='tefile', type=str, required=True,
+                        help='locInd file for transposable element annotations')
     parser.add_argument('--stranded', metavar='option', dest='stranded', type=str, default="no",
                         choices=['forward', 'no', 'reverse'], help='Is this a stranded library? (forward, no, \
                         or reverse). For "first-strand" cDNA libraries (e.g. TruSeq), choose reverse. \
-                        For "second-strand" cDNA libraries (e.g. ScriptSeq), choose forward. DEFAULT: no.')
+                        For "second-strand" cDNA libraries (e.g. QIAseq stranded), choose forward. DEFAULT: no.')
     parser.add_argument('--mode', metavar='TE counting mode', dest='te_mode', type=str, default='multi',
                         choices=['uniq', 'multi'], help='How to count TE: uniq (unique mappers only), \
                         or multi (distribute among all alignments). DEFAULT: multi')
