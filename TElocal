@@ -595,7 +595,7 @@ def main():
     if args.gtffile[-4:] == '.gtf':
         try:
             info("Building gene index ....... \n")
-            geneIdx = GeneFeatures(args.gtffile, args.stranded, "exon", "gene_id")
+            geneIdx = GeneFeatures(args.gtffile, "exon", "gene_id")
             info("Done building gene index ...... \n")
         except:
             sys.stderr.write("Error in building gene index \n")

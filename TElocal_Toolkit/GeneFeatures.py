@@ -75,7 +75,7 @@ class GFF_Reader():
             return "line %d of file %s" % (self.line_no, self.filename)
 
 
-class GeneFeatures:
+class GeneFeatures(object):
     """index of Gene annotations.
         """
     def __init__(self, GTFfilename, feature_type, id_attribute):
