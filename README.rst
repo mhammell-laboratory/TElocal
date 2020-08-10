@@ -148,15 +148,9 @@ that reporting a maximum of 100 alignments per read provides an optimal compromi
 of multi-mappers in many genome builds. However, we highly suggest that users optimize this parameter for their particular experiment, 
 as this could significantly improve the quality of transposable element quantification.
 
-*Optimizing alignment parameters for non-reference strains*
+*Paired end sequencing input*
 
-It is common that the specific laboratory strains used in an experiment contains genomic variations not present in the reference strain.
-While this can be mitigated through allowing mismatches during alignments, certain lab strains (e.g. Drosophila melanogaster) have
-diverged significantly from the reference genomes. We highly recommend that users should refine their alignment procedures to better
-account for the expected variations between their lab strains and the reference genome, which will accordingly improve their analysis
-with TElocal. Users can also align to a custom genome build specific to their organism, though they would need GTF annotations for 
-genes and transposable elements that are compatible with their custom genome in order to utilize TElocal. Please contact us if you
-require advice in generating these annotation files.
+For paired-end libraries, it is recommended that only alignments from properly paired reads are present in the input BAM file. I.e., each read 1 alignment should only have a single read 2 alignment. For example, if read 1 matched 3 genomic locations (A, B, C), then if read 2 also match 3 genomic locations (A', B', C'), then all three pairs of alignments could be used (and should be in the BAM file). However, if alignment C of read 1 was matched with more than one alignment of read 2 (e.g. C' and C*), then alignment C should be discarded (as there are unmatched alignments between read 1 and read 2). `STAR <https://github.com/alexdobin/STAR>`_ only outputs properly paired alignments by default, while `Bowtie2 <http://bowtie-bio.sourceforge.net/bowtie2/index.shtml>`_ requires the :code:`--no-mixed` parameter to be used.
 
 *Specific recommendations when using STAR*
 
