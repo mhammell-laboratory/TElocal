@@ -1,14 +1,14 @@
 Name: TElocal
-Version: 0.1.0
+Version: 2.0.0
 Summary: Tool for estimating differential enrichment of Transposable Elements and other highly repetitive regions
-Home-page: http://hammelllab.labsites.cshl.edu/software#TEtranscripts
+Home-page: http://hammelllab.labsites.cshl.edu/software#TElocal
 Author: Talitha Forcier, Ying Jin, Eric Paniagua, Oliver Tam and Molly Hammell
 Author-email: talitha@cshl.edu
 License: GPLv3
 Description: TElocal
         =========
         
-        Version: 0.1.0
+        Version: 2.0.0
 
         *NOTE* All programs rely on specially curated GTF or ind files, which are not
         packaged with this software due to their size. Please go to 
@@ -19,9 +19,7 @@ Description: TElocal
         to both genes & transposable elements.
         
         
-        `Github Page <https://github.com/mhammell-laboratory/TEtranscripts>`_
-        
-        `Pypi Page <https://pypi.python.org/pypi/TEToolkit>`_
+        `Github Page <https://github.com/mhammell-laboratory/TElocal>`_
         
         `MHammell Lab <http://hammelllab.labsites.cshl.edu/software>`_
         
@@ -33,7 +31,7 @@ Description: TElocal
         Requirements
         ------------
         
-        Python:     2.6.x or 2.7.x (not tested in Python 3.x)
+        Python:     2.6.x or 2.7.x or 3.x
         
         pysam:      0.9.0 or greater
 
@@ -79,16 +77,14 @@ Description: TElocal
             Required arguments:
               -b | --BAM alignment-file    RNAseq alignment file (BAM preferred)
               --GTF genic-annot-file       GTF or ind file for gene annotations
-              --TE TE-annot-file           GTF or ind file for transposable element annotations
+              --TE TE-annot-file           locInd file for transposable element annotations
         
             Optional arguments:
         
               *Input/Output options*
-              --format [input file format]
-                 Input file format: BAM or SAM. DEFAULT: BAM
               --stranded [option]   Is this a stranded library? (yes, no, or reverse).
                          no      -  Library is unstranded
-                         yes     -  "Second-strand cDNA library (e.g. ScriptSeq)
+                         forward -  "Second-strand cDNA library (e.g. ScriptSeq)
                          reverse -  "First-strand" cDNA library (e.g. Illumina TruSeq)
                                     DEFAULT: no.
               --sortByPos           Input file is sorted by chromosome position.
@@ -128,7 +124,7 @@ Description: TElocal
 
         If BAM files are unsorted, or sorted by queryname:: 
 
-            TElocal --format BAM --mode multi -b RNAseq.bam --project sample_nosort_test --GTF ref_file.gtf.ind --TE TE_file.gtf.ind
+            TElocal --mode multi -b RNAseq.bam --project sample_nosort_test --GTF ref_file.gtf.ind --TE TE_file.locInd
         
         
         Recommendations for TElocal input files

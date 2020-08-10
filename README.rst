@@ -1,7 +1,7 @@
 TElocal
 =============
 
-Version: 0.1.0
+Version: 2.0.0
 
 *NOTE* TElocal relies on specially curated and indexed GTF files, which are not
 packaged with this software due to their size. Please go to 
@@ -25,7 +25,7 @@ Contact: Talitha Forcier (talitha@cshl.edu)
 Requirements
 ------------
 
-Python:     2.6.x or 2.7.x (not tested in Python 3.x)
+Python:     2.6.x or 2.7.x or 3.x
 
 pysam:      0.9.x or greater
 
@@ -51,10 +51,9 @@ run this command instead::
 
 to the PATH variable, and
 
-     /local/home/usr/lib/python2.X/site-packages 
+     /local/home/usr/lib/pythonX.Y/site-packages
 
-to the PYTHONPATH variable, where python2.X refers to the 
-python version (e.g. python2.7 if using python version 2.7.x).
+to the PYTHONPATH variable, where X refers to the major python version, and Y refers to the minor python version. (e.g. python2.7 if using python version 2.7.x, and python3.6 if using python version 3.6.x)
 
 
 TElocal
@@ -73,17 +72,15 @@ Usage
     Required arguments:
       -b | --BAM alignment-file    RNAseq alignment file (BAM preferred)
       --GTF genic-annot-file       GTF or ind file for gene annotations
-      --TE TE-annot-file           GTF or ind file for transposable element annotations
+      --TE TE-annot-file           locInd file for transposable element annotations
 
     Optional arguments:
 
       *Input/Output options*
-      --format [input file format]
-         Input file format: BAM or SAM. DEFAULT: BAM
-      --stranded [option]   Is this a stranded library? (yes, no, or reverse).
+      --stranded [option]   Is this a stranded library? (no, forward, or reverse).
                  no      -  Library is unstranded   
-                 yes     -  "Second-strand cDNA library (e.g. ScriptSeq)
-                 reverse -  "First-strand" cDNA library (e.g. Illumina TruSeq)
+                 forward -  "Second-strand cDNA library (e.g. QIAseq stranded)
+                 reverse -  "First-strand" cDNA library (e.g. Illumina TruSeq stranded)
                             DEFAULT: no.
       --sortByPos           Input file is sorted by chromosome position.
       --project [name]      Prefix used for output files (e.g. project name)
@@ -122,11 +119,11 @@ Example Command Lines
 
 If BAM files are unsorted, or sorted by queryname:: 
 
-    TElocal --format BAM --mode multi -b RNAseq.bam --project sample_nosort_test
+    TElocal -b RNAseq.bam --GTF gene_annots.gtf --TE te_annots.locInd --project sample_nosort_test
 
 If BAM files are sorted by coordinates/position::
 
-    TElocal --sortByPos --format BAM --mode multi -b RNAseq.bam --project sample_sorted_test
+    TElocal --sortByPos -b RNAseq.bam --GTF gene_annots.gtf --TE te_annots.locInd --project sample_sorted_test
 
 Cluster Usage Recommendations
 -----------------------------

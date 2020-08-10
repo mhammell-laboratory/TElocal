@@ -7,7 +7,7 @@ import operator
 class IntervalTree(object):
     __slots__ = ('intervals', 'left', 'right', 'center')
 
-    def __init__(self, intervals, depth=16, minbucket=16, _extent=None, maxbucket=512):
+    def __init__(self, intervals, depth=24, minbucket=16, _extent=None, maxbucket=512):
         """\
         `intervals` a list of intervals *with start and stop* attributes.
         `depth`     the depth of the tree
@@ -20,7 +20,7 @@ class IntervalTree(object):
         dealing with large numbers (> 1M) of intervals, the depth could
         be increased to 24.
 
-        Useage:
+        Usage:
 
          >>> ivals = [Interval(2, 3), Interval(1, 8), Interval(3, 6)]
          >>> tree = IntervalTree(ivals)

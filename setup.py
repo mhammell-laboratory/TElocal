@@ -5,7 +5,7 @@ def readme():
                return f.read()
 
 setup(name='TElocal',
-      version='0.1.0',
+      version='1.1.0',
       description='Tool for estimating differential enrichment of Transposable Elements and other highly repetitive regions in a locus-specific approach',
       long_description=readme(),
       classifiers=[
@@ -16,6 +16,7 @@ setup(name='TElocal',
           'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
           'Topic :: Scientific/Engineering :: Bio-Informatics',
           'Programming Language :: Python :: 2.7',
+          'Programming Language :: Python :: 3',
           'Operating System :: MacOS',
           'Operating System :: Unix'
       ],
@@ -25,9 +26,7 @@ setup(name='TElocal',
       author_email='talitha@cshl.edu',
       license='GPLv3',
       packages=[
-          'TEToolkit',
-          'TEToolkit.IO',
-          'TEToolkit.ShortRead'
+          'TElocal_Toolkit'
       ],
       platforms=[
           'Linux',
