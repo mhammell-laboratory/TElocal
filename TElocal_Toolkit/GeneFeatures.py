@@ -19,7 +19,7 @@ from TElocal_Toolkit.IntervalTree import *
 
 
 # Taken from HTSeq
-class GFF_Reader():
+class GFF_Reader(object):
     """Parse a GFF file
     Pass the constructor either a file name or an iterator of lines of a
     GFF file. If a file name is specified, it may refer to a gzip compressed
