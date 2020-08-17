@@ -5,7 +5,7 @@ def readme():
                return f.read()
 
 setup(name='TElocal',
-      version='1.1.0',
+      version='1.1.1',
       description='Tool for estimating differential enrichment of Transposable Elements and other highly repetitive regions in a locus-specific approach',
       long_description=readme(),
       classifiers=[
