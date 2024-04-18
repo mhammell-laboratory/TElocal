@@ -18,5 +18,5 @@ RUN python setup.py install \
 
 #ENVIRONMENT
 
-ENC LC_ALL C
+ENV LC_ALL C
 ENV LANG C
