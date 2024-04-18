@@ -11,7 +11,7 @@ RUN apt-get --assume-yes update \
 
 #MAIN
 
-RUN python setup.py instal
+RUN python setup.py install
 	&& rm -rf *.tgz *.tar *.zip \
 	&& rm -rf /var/cache/apk/* \
 	&& rm -rf /tmp/*
