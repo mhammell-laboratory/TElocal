@@ -15,7 +15,6 @@ setup(name='TElocal',
           'Natural Language :: English',
           'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
           'Topic :: Scientific/Engineering :: Bio-Informatics',
-          'Programming Language :: Python :: 2.7',
           'Programming Language :: Python :: 3',
           'Operating System :: MacOS',
           'Operating System :: Unix'
@@ -33,7 +32,6 @@ setup(name='TElocal',
           'MacOS'
       ],
       install_requires=[
-          'argparse',
           'pysam>=0.9'
       ],
       include_package_data=True,
