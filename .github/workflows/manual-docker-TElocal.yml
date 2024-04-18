@@ -1,5 +1,5 @@
 
-name: TEtranscripts Manual Docker Workflow
+name: TElocal Manual Docker Workflow
 
 on:
   workflow_dispatch:
@@ -15,8 +15,8 @@ jobs:
     - uses: mr-smithers-excellent/docker-build-push@v5
       name: Build & push Docker image
       with:
-        image: mhammelllab/tetranscripts
-        tags: 2.2.3, latest
+        image: mhammelllab/telocal
+        tags: 1.1.2, latest
         registry: docker.io
         dockerfile: Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}

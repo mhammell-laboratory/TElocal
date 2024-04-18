@@ -4,7 +4,7 @@ TElocal
 Version: 1.1.1
 
 *NOTE* TElocal relies on specially curated and indexed GTF files, which are not
-packaged with this software due to their size. Please go to 
+packaged with this software due to their size. Please go to
 `our website <http://hammelllab.labsites.cshl.edu/software#TElocal>`_
 for instructions to download the prebuilt curated indices.
 
@@ -80,7 +80,7 @@ Usage
 
       *Input/Output options*
       --stranded [option]   Is this a stranded library? (no, forward, or reverse).
-                 no      -  Library is unstranded   
+                 no      -  Library is unstranded
                  forward -  "Second-strand cDNA library (e.g. QIAseq stranded)
                  reverse -  "First-strand" cDNA library (e.g. Illumina TruSeq stranded)
                             DEFAULT: no.
@@ -97,7 +97,7 @@ Usage
       -L | --fragmentLength [fragLength]
          Average length of fragment used for single-end sequencing
          DEFAULT: For paired-end, estimated from the input alignment file. For single-end, ignored by default.
-      -i | --iteration 
+      -i | --iteration
          maximum number of iterations used to optimize multi-reads assignment. DEFAULT: 100
 
       *Other options*
@@ -119,7 +119,7 @@ Usage
 Example Command Lines
 ---------------------
 
-If BAM files are unsorted, or sorted by queryname:: 
+If BAM files are unsorted, or sorted by queryname::
 
     TElocal -b RNAseq.bam --GTF gene_annots.gtf --TE te_annots.locInd --project sample_nosort_test
 
@@ -136,7 +136,7 @@ In our experience, we recommend around 20-30Gb of memory for analyzing human sam
 Recommendations for TElocal input files
 =============================================
 
-TElocal can perform transposable element quantification from alignment results (e.g. BAM files) generated from a variety of programs. 
+TElocal can perform transposable element quantification from alignment results (e.g. BAM files) generated from a variety of programs.
 Given the variety of experimental systems, we could not provide an optimal alignment strategy for every approach. Therefore,
 we recommend that users identify the optimal parameters for their particular genome and alignment program in order to get the best
 results.
@@ -145,9 +145,9 @@ When optimizing the alignment parameters, we recommend taking these points into 
 
 *Allowing sufficient number of multi-mappers during alignment*
 
-Most alignment programs provide only 1 alignment per read by default. We recommend reporting multiple alignments per read. We have found 
-that reporting a maximum of 100 alignments per read provides an optimal compromise between the size of the alignment file and recovery 
-of multi-mappers in many genome builds. However, we highly suggest that users optimize this parameter for their particular experiment, 
+Most alignment programs provide only 1 alignment per read by default. We recommend reporting multiple alignments per read. We have found
+that reporting a maximum of 100 alignments per read provides an optimal compromise between the size of the alignment file and recovery
+of multi-mappers in many genome builds. However, we highly suggest that users optimize this parameter for their particular experiment,
 as this could significantly improve the quality of transposable element quantification.
 
 *Paired end sequencing input*
@@ -156,11 +156,11 @@ For paired-end libraries, it is recommended that only alignments from properly p
 
 *Specific recommendations when using STAR*
 
-`STAR <https://github.com/alexdobin/STAR>`_ utilizes two parameters for optimal identification of multi-mappers ``--outFilterMultimapNmax`` and ``--outAnchorMultimapNmax``. 
-The author of STAR recommends that ``--winAnchorMultimapNmax`` should be set at twice the value used in ``--outFilterMultimapNmax``, 
-but no less than 50. In our study, we used the same number for both parameters (100), and found negligible differences in identifying 
+`STAR <https://github.com/alexdobin/STAR>`_ utilizes two parameters for optimal identification of multi-mappers ``--outFilterMultimapNmax`` and ``--outAnchorMultimapNmax``.
+The author of STAR recommends that ``--winAnchorMultimapNmax`` should be set at twice the value used in ``--outFilterMultimapNmax``,
+but no less than 50. In our study, we used the same number for both parameters (100), and found negligible differences in identifying
 multi-mappers. Upon further discussion with the author of STAR, we recommend that setting the same value for ``--winAnchorMultimapNmax``
-and ``--outFilterMultimapNmax``, though we highly suggest users test multiple values of ``--winAnchorMultimapNmax`` to identify the 
+and ``--outFilterMultimapNmax``, though we highly suggest users test multiple values of ``--winAnchorMultimapNmax`` to identify the
 optimal value for their experiment.
 
 
