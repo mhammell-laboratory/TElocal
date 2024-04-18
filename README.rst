@@ -57,6 +57,19 @@ to the PATH variable, and
 
 to the PYTHONPATH variable, where ``X`` refers to the major python version, and ``Y`` refers to the minor python version. (e.g. ``python2.7`` if using python version 2.7.x, and ``python3.6`` if using python version 3.6.x)
 
+Alternative Singularity Installation for HPC
+--------------------------------------------
+
+Many High Performance Compunting clusters (HPCs) have
+access to singularity which allows for the download and
+execution of containers, TElocal also has a container
+through docker, it can be downloaded by singularity thusly::
+
+  singularity pull telocal.sif docker://mhammelllab/telocal:latest
+
+Execution is then through singularity as well::
+
+  singularity exec telocal.sif TElocal --sortByPos -b RNAseq.bam --GTF gene_annots.gtf --TE te_annots.locInd --project sample_sorted_test
 
 TElocal
 =======
