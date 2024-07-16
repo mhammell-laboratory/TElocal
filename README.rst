@@ -5,7 +5,7 @@ Version: 1.1.1
 
 *NOTE* TElocal relies on specially curated and indexed GTF files, which are not
 packaged with this software due to their size. Please go to
-`our website <http://hammelllab.labsites.cshl.edu/software#TElocal>`_
+`our website <https://www.mghlab.org/software/telocal>`_
 for instructions to download the prebuilt curated indices.
 
 TElocal takes RNA-seq (and similar data) and annotates reads to both
@@ -14,7 +14,7 @@ genes & transposable elements.
 
 `Github Page <https://github.com/mhammell-laboratory/TElocal>`_
 
-`MHammell Lab <http://hammelllab.labsites.cshl.edu/software>`_
+`MHammell Lab <https://www.mghlab.org/software>`_
 
 Created by Ying Jin, Eric Paniagua, Oliver Tam & Molly Gale Hammell, February 2014
 
@@ -180,7 +180,7 @@ optimal value for their experiment.
 Copying & distribution
 ======================
 
-TElocal is part of `TEToolkit suite <http://hammelllab.labsites.cshl.edu/software/>`_.
+TElocal is part of `TEToolkit suite <https://www.mghlab.org/software>`_.
 
 TElocal is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
