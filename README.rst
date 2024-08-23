@@ -14,7 +14,7 @@ genes & transposable elements.
 
 `Github Page <https://github.com/mhammell-laboratory/TElocal>`_
 
-`MHammell Lab <https://www.mghlab.org/software>`_
+`Molly Gale Hammell Lab <https://www.mghlab.org/software>`_
 
 Created by Ying Jin, Eric Paniagua, Oliver Tam & Molly Gale Hammell, February 2014
 
