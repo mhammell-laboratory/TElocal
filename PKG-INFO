@@ -3,7 +3,7 @@ Version: 1.1.1
 Summary: Tool for estimating differential enrichment of Transposable Elements and other highly repetitive regions
 Home-page: https://www.mghlab.org/software/telocal
 Author: Talitha Forcier, Ying Jin, Eric Paniagua, Oliver Tam and Molly Hammell
-Author-email: talitha@cshl.edu
+Author-email: mghcompbio@gmail.com
 License: GPLv3
 Description: TElocal
         =========
