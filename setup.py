@@ -20,9 +20,9 @@ setup(name='TElocal',
           'Operating System :: Unix'
       ],
       keywords='TE transposable element differential enrichment',
-      url='http://hammelllab.labsites.cshl.edu/software#TElocal',
+      url='https://www.mghlab.org/software/telocal',
       author='Talitha Forcier, Ying Jin, Eric Paniagua, Oliver Tam, Molly Hammell',
-      author_email='talitha@cshl.edu',
+      author_email='mghcompbio@gmail.com',
       license='GPLv3',
       packages=[
           'TElocal_Toolkit'

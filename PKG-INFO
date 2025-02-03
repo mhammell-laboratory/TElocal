@@ -1,7 +1,7 @@
 Name: TElocal
 Version: 1.1.1
 Summary: Tool for estimating differential enrichment of Transposable Elements and other highly repetitive regions
-Home-page: http://hammelllab.labsites.cshl.edu/software#TElocal
+Home-page: https://www.mghlab.org/software/telocal
 Author: Talitha Forcier, Ying Jin, Eric Paniagua, Oliver Tam and Molly Hammell
 Author-email: talitha@cshl.edu
 License: GPLv3
@@ -12,7 +12,7 @@ Description: TElocal
 
         *NOTE* All programs rely on specially curated GTF or ind files, which are not
         packaged with this software due to their size. Please go to
-        our website <http://hammelllab.labsites.cshl.edu/software#TEtranscripts>`_
+        our website <https://www.mghlab.org/software/telocal>`_
         for instructions to download the curated GTF files.
 
 	TElocal takes RNA-seq (and similar data) and annotates reads
@@ -21,12 +21,12 @@ Description: TElocal
 
 	`Github Page <https://github.com/mhammell-laboratory/TElocal>`_
 
-	`MHammell Lab <http://hammelllab.labsites.cshl.edu/software>`_
+	`MHammell Lab <https://www.mghlab.org/software/>`_
 
 	Created by Ying Jin, Eric Paniagua, Oliver Tam & Molly Hammell, February 2014
 
-	Copyright (C) 2014-2020 Talitha Forcier, Ying Jin, Eric Paniagua, Oliver Tam & Molly Hammell
-        Contact: Talitha Forcier (talitha@cshl.edu)
+	Copyright (C) 2014-2025 Talitha Forcier, Ying Jin, Eric Paniagua, Oliver Tam & Molly Hammell
+        Contact: mghcompbio@gmail.com
 
 	Requirements
         ------------
@@ -69,7 +69,7 @@ Description: TElocal
 
         ::
 
-            usage: TEcount -b alignment-file
+            usage: TElocal -b alignment-file
                            --GTF genic-annot-file
                            --TE TE-annot-file
                            [optional arguments]
