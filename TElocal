@@ -425,7 +425,64 @@ def count_transcript_abundance(filename, geneIdx, teIdx, stranded, te_mode, sort
 
     except StopIteration:
         pass
-        # the last read
+
+    # Flush the final pending read group. The main loop only finalizes a
+    # group on the *next* read-name transition; without this block the
+    # last group in every BAM is silently dropped at StopIteration. This
+    # implements the "# the last read" comment that was previously a
+    # placeholder.
+    if prev_read_name != "":
+        if paired:
+            final_apr = []
+            if len(multi_read1) <= 1 and len(multi_read2) <= 1:
+                uniq_reads += 1
+                r1 = multi_read1[0] if multi_read1 else None
+                r2 = multi_read2[0] if multi_read2 else None
+                if r1 is not None or r2 is not None:
+                    final_apr.append((r1, r2))
+            else:
+                nonunique += 1
+                if te_mode == 'uniq':
+                    empty += 1
+                else:
+                    if len(multi_read2) == 0:
+                        for r in multi_read1:
+                            final_apr.append((r, None))
+                    elif len(multi_read1) == 0:
+                        for r in multi_read2:
+                            final_apr.append((None, r))
+                    elif len(multi_read1) == len(multi_read2):
+                        for idx in range(len(multi_read1)):
+                            final_apr.append((multi_read1[idx], multi_read2[idx]))
+        else:
+            final_apr = alignments_per_read
+            if len(alignments_per_read) == 1:
+                uniq_reads += 1
+            elif len(alignments_per_read) > 1:
+                nonunique += 1
+                if te_mode == 'uniq':
+                    empty += 1
+                    final_apr = []
+
+        if final_apr:
+            try:
+                (annot_gene, annot_TE) = ovp_annotation(references, final_apr, geneIdx, teIdx, stranded)
+                if len(final_apr) > 1:
+                    no_annot_te = parse_annotations_TE(multi_reads, annot_TE, te_counts, te_multi_counts, leftOver_te)
+                    if no_annot_te:
+                        no_annot_gene = parse_annotations_gene(annot_gene, gene_counts, leftOver_gene)
+                        if no_annot_gene:
+                            empty += 1
+                else:
+                    no_annot_gene = parse_annotations_gene(annot_gene, gene_counts, leftOver_gene)
+                    if no_annot_gene:
+                        no_annot_te = parse_annotations_TE(multi_reads, annot_TE, te_counts, te_multi_counts, leftOver_te)
+                        if no_annot_te:
+                            empty += 1
+            except:
+                sys.stderr.write("Error occurred when processing final read group %s in file %s.\n" % (prev_read_name, filename))
+                raise
+
     try:
         # resolve ambiguity
         if len(leftOver_gene) > 0:
