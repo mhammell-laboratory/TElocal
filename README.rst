@@ -1,7 +1,7 @@
 TElocal
 =============
 
-Version: 1.1.2
+Version: 1.1.3
 
 *NOTE* TElocal relies on specially curated and indexed GTF files, which are not
 packaged with this software due to their size. Please go to
