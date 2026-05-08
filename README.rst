@@ -14,6 +14,8 @@ genes & transposable elements.
 
 `Github Page <https://github.com/mhammell-laboratory/TElocal>`_
 
+`PyPi Page <https://pypi.org/project/TElocal>`_
+
 `Molly Gale Hammell Lab <https://www.mghlab.org/software>`_
 
 Created by Ying Jin, Eric Paniagua, Oliver Tam & Molly Gale Hammell, February 2014
@@ -23,7 +25,7 @@ Copyright (C) 2014-2023 Talitha Forcier, Ying Jin, Eric Paniagua, Oliver Tam & M
 Contact: mghcompbio@gmail.com
 
 Requirements
-------------
+============
 
 Python:     2.6.x or 2.7.x or 3.x
 
@@ -31,7 +33,17 @@ pysam:      0.9.x or greater
 
 
 Installation
-------------
+============
+
+From PyPi
+---------
+
+1. Run the following::
+
+    $ pip install TElocal
+
+From source
+-----------
 
 1. Download compressed tarball.
 2. Unpack tarball.
