@@ -1,3 +1,12 @@
+.. image:: https://img.shields.io/pypi/v/TElocal?logo=python
+  :target: https://pypi.org/project/TEsingle/
+.. image:: https://img.shields.io/docker/v/mhammelllab/telocal?logo=docker&label=docker%2Fsingularity
+  :target: https://hub.docker.com/r/mhammelllab/tetranscripts/tags
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.20091060.svg
+  :target: https://doi.org/10.5281/zenodo.20091060
+.. image:: https://img.shields.io/github/license/mhammell-laboratory/TElocal
+   :alt: GitHub License
+
 TElocal
 =============
 
@@ -13,8 +22,6 @@ genes & transposable elements.
 
 
 `Github Page <https://github.com/mhammell-laboratory/TElocal>`_
-
-`PyPi Page <https://pypi.org/project/TElocal>`_
 
 `Molly Gale Hammell Lab <https://www.mghlab.org/software>`_
 
