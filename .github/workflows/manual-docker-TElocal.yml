@@ -16,7 +16,7 @@ jobs:
       name: Build & push Docker image
       with:
         image: mhammelllab/telocal
-        tags: 1.1.2, latest
+        tags: 1.1.3, latest
         registry: docker.io
         dockerfile: Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
